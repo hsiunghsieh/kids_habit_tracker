@@ -1,0 +1,790 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>好習慣養成</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#ffeef8 0%,#e8f4ff 50%,#fff8e8 100%);min-height:100vh;color:#4a3f5c}
+:root{
+  --pink:#ff6eb4;--pink-light:#ffe4f3;--pink-pale:#fff0f9;
+  --blue:#5badff;--blue-light:#e0f0ff;
+  --yellow:#ffc84a;--yellow-light:#fff5d6;
+  --green:#5dca8a;--green-light:#e0f9ec;
+  --purple:#a78bfa;--purple-light:#ede9fe;
+  --orange:#ff9050;--orange-light:#ffe8d6;
+  --red:#ff6b6b;
+  --text:#4a3f5c;--text2:#7a6e8a;--text3:#b0a5c0;
+  --shadow:0 4px 20px rgba(150,100,200,0.12);
+  --shadow-sm:0 2px 10px rgba(150,100,200,0.08);
+  --radius:20px;--radius-sm:12px;
+}
+.app{max-width:800px;margin:0 auto;padding:16px;min-height:100vh}
+.login-screen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh;gap:24px}
+.login-mascot{font-size:80px;animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.login-title{font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center}
+.login-subtitle{font-size:16px;color:var(--text2);text-align:center}
+.login-card{background:white;border-radius:28px;padding:32px;box-shadow:var(--shadow);width:100%;max-width:380px;display:flex;flex-direction:column;gap:16px}
+.login-tabs{display:flex;background:#f5f0ff;border-radius:var(--radius-sm);padding:4px;gap:4px}
+.login-tab{flex:1;padding:10px;border:none;background:transparent;border-radius:10px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .2s}
+.login-tab.active{background:white;color:var(--purple);box-shadow:0 2px 8px rgba(167,139,250,0.2)}
+.input-field{width:100%;padding:14px 16px;border:2px solid #ede8ff;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:15px;color:var(--text);outline:none;transition:all .2s}
+.input-field:focus{border-color:var(--purple);box-shadow:0 0 0 4px rgba(167,139,250,0.1)}
+.btn{padding:14px 24px;border:none;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn:active{transform:scale(0.97)}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--pink));color:white;box-shadow:0 4px 15px rgba(167,139,250,0.4)}
+.btn-secondary{background:var(--yellow-light);color:#b8860b}
+.btn-ghost{background:transparent;color:var(--text2);border:2px solid #ede8ff}
+.btn-green{background:var(--green-light);color:#1a7a45}
+.btn-sm{padding:8px 16px;font-size:13px;border-radius:10px}
+.btn-xs{padding:6px 12px;font-size:12px;border-radius:8px}
+.err-msg{color:var(--red);font-size:13px;font-weight:600;text-align:center}
+.guest-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border:2px dashed #ede8ff;border-radius:var(--radius-sm);background:transparent;color:var(--text2);font-family:'Nunito',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .2s;width:100%}
+.guest-btn:hover{background:#f5f0ff;border-color:var(--purple);color:var(--purple)}
+.app-header{background:white;border-radius:28px;padding:16px 20px;box-shadow:var(--shadow);margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.header-user{display:flex;align-items:center;gap:12px}
+.avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:22px}
+.header-name{font-size:16px;font-weight:800;color:var(--text)}
+.sticker-count{display:flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--yellow-light),#fff8d0);padding:10px 18px;border-radius:50px;border:2px solid var(--yellow)}
+.sticker-count strong{font-size:18px;font-weight:900;color:#8b6914}
+.nav-tabs{background:white;border-radius:28px;padding:8px;box-shadow:var(--shadow);margin-bottom:16px;display:flex;gap:4px;overflow-x:auto}
+.nav-tab{flex:1;min-width:80px;padding:10px 8px;border:none;background:transparent;border-radius:16px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;transition:all .2s;text-align:center;white-space:nowrap}
+.nav-tab.active{background:linear-gradient(135deg,var(--purple),var(--pink));color:white;box-shadow:0 3px 12px rgba(167,139,250,0.35)}
+.nav-tab:hover:not(.active){background:#f5f0ff;color:var(--purple)}
+.page{display:none}.page.active{display:block}
+.page-title{font-size:22px;font-weight:900;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.progress-container{background:white;border-radius:20px;padding:20px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-label span{font-size:14px;font-weight:700;color:var(--text2)}
+.progress-label strong{font-size:16px;font-weight:900;color:var(--purple)}
+.progress-bar-bg{height:20px;background:#f0eaff;border-radius:50px;overflow:hidden}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:50px;transition:width .6s cubic-bezier(.34,1.56,.64,1)}
+.checkin-list{display:flex;flex-direction:column;gap:12px}
+.checkin-item{background:white;border-radius:20px;padding:16px 20px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:16px;transition:all .3s;border:2px solid transparent}
+.checkin-item.done{background:linear-gradient(135deg,#f0fff6,#e8f9ff);border-color:var(--green)}
+.checkin-item-icon{font-size:32px;width:50px;height:50px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.checkin-item-info{flex:1}
+.checkin-item-name{font-size:16px;font-weight:800;color:var(--text)}
+.checkin-item-reward{font-size:13px;font-weight:600;color:var(--text2);margin-top:2px}
+.check-btn{width:50px;height:50px;border:none;border-radius:16px;font-size:24px;cursor:pointer;transition:all .3s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.check-btn.unchecked{background:#f5f0ff;color:var(--text3)}
+.check-btn.unchecked:hover{background:var(--green-light);color:var(--green);transform:scale(1.1)}
+.check-btn.checked{background:var(--green-light);color:var(--green)}
+@keyframes pop{0%{transform:scale(0.8)}100%{transform:scale(1)}}
+.all-done-banner{background:linear-gradient(135deg,var(--yellow),var(--orange));border-radius:20px;padding:20px;text-align:center;margin-top:16px;animation:pop .4s ease;box-shadow:0 6px 20px rgba(255,144,80,0.3)}
+.all-done-banner h3{font-size:20px;font-weight:900;color:white;margin-bottom:4px}
+.all-done-banner p{font-size:14px;color:rgba(255,255,255,0.9)}
+.sub-tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+.sub-tab{padding:10px 18px;border:2px solid #ede8ff;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--text2);cursor:pointer;background:white;white-space:nowrap;transition:all .2s}
+.sub-tab.active{background:linear-gradient(135deg,var(--blue),var(--purple));color:white;border-color:transparent;box-shadow:0 3px 12px rgba(91,173,255,0.3)}
+.streak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.streak-card{background:white;border-radius:20px;padding:16px;box-shadow:var(--shadow-sm);text-align:center;position:relative;overflow:hidden}
+.streak-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--purple),var(--pink))}
+.streak-icon{font-size:36px;margin-bottom:8px}
+.streak-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px}
+.streak-days{font-size:28px;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.streak-label{font-size:12px;color:var(--text2);font-weight:600}
+.streak-bar-bg{height:8px;background:#f0eaff;border-radius:50px;overflow:hidden;margin-top:8px}
+.streak-bar-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:50px;transition:width .6s ease}
+.milestone-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.stat-card{background:white;border-radius:20px;padding:20px;box-shadow:var(--shadow-sm);text-align:center}
+.stat-icon{font-size:32px;margin-bottom:8px}
+.stat-num{font-size:32px;font-weight:900;background:linear-gradient(135deg,var(--purple),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-label{font-size:13px;font-weight:600;color:var(--text2)}
+.milestone-list{display:flex;flex-direction:column;gap:10px}
+.milestone-item{background:white;border-radius:16px;padding:14px 18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px}
+.milestone-icon{font-size:28px;width:44px;height:44px;border-radius:14px;background:var(--yellow-light);display:flex;align-items:center;justify-content:center}
+.milestone-info strong{font-size:14px;font-weight:800;color:var(--text)}
+.milestone-info span{display:block;font-size:12px;color:var(--text2);font-weight:600;margin-top:2px}
+.sticker-wall{background:white;border-radius:24px;padding:24px;box-shadow:var(--shadow);min-height:200px}
+.sticker-grid{display:flex;flex-wrap:wrap;gap:10px}
+.sticker-item{font-size:40px;animation:stickerIn .3s cubic-bezier(.34,1.56,.64,1)}
+@keyframes stickerIn{0%{transform:scale(0)rotate(-20deg)}100%{transform:scale(1)rotate(0deg)}}
+.empty-state{text-align:center;padding:40px;color:var(--text3)}
+.empty-state .es-icon{font-size:60px;margin-bottom:12px}
+.empty-state p{font-size:15px;font-weight:600}
+.gacha-container{display:flex;flex-direction:column;align-items:center;gap:24px;padding:20px 0}
+.gacha-machine{position:relative;width:200px;height:240px;cursor:pointer;user-select:none;transition:transform .2s}
+.gacha-machine:hover{transform:scale(1.03)}
+.gacha-cost{background:var(--yellow-light);border:2px solid var(--yellow);border-radius:50px;padding:10px 24px;font-size:16px;font-weight:800;color:#8b6914;display:flex;align-items:center;gap:8px}
+.gacha-btn-main{background:linear-gradient(135deg,var(--purple),var(--pink));color:white;font-size:18px;font-weight:900;padding:16px 40px;border:none;border-radius:50px;cursor:pointer;box-shadow:0 6px 20px rgba(167,139,250,0.4);transition:all .2s;font-family:'Nunito',sans-serif}
+.gacha-btn-main:hover{transform:translateY(-3px)}
+.gacha-btn-main:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.gacha-result{background:linear-gradient(135deg,#fff8e8,#fff0f9);border-radius:24px;padding:24px;text-align:center;box-shadow:var(--shadow);border:2px solid var(--yellow);animation:pop .4s cubic-bezier(.34,1.56,.64,1)}
+.gacha-result-icon{font-size:72px;margin-bottom:12px;animation:bounce 1.5s ease-in-out infinite}
+.gacha-result-name{font-size:20px;font-weight:900;color:var(--text);margin-bottom:4px}
+
+/* GACHA HISTORY — the main new section */
+.gh-card{background:white;border-radius:20px;padding:16px 18px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:14px;transition:all .3s;border:2px solid transparent}
+.gh-card.used{background:#f8f8f8;border-color:#e0e0e0;opacity:.75}
+.gh-icon{font-size:32px;width:48px;height:48px;border-radius:16px;background:var(--purple-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .3s}
+.gh-card.used .gh-icon{background:#f0f0f0;filter:grayscale(0.5)}
+.gh-info{flex:1;min-width:0}
+.gh-name{font-size:15px;font-weight:800;color:var(--text)}
+.gh-card.used .gh-name{color:var(--text2);text-decoration:line-through}
+.gh-meta{display:flex;align-items:center;gap:8px;margin-top:4px;flex-wrap:wrap}
+.gh-date{font-size:12px;color:var(--text3);font-weight:600}
+.gh-cost{font-size:12px;font-weight:700;color:var(--yellow);background:var(--yellow-light);padding:2px 10px;border-radius:50px}
+.gh-used-date{font-size:12px;color:var(--green);font-weight:700}
+.badge{padding:4px 12px;border-radius:50px;font-size:12px;font-weight:700;display:inline-flex;align-items:center}
+.use-btn{padding:8px 16px;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.use-btn-active{background:linear-gradient(135deg,var(--green),#3aaa6e);color:white;box-shadow:0 3px 10px rgba(93,202,138,0.35)}
+.use-btn-active:hover{transform:scale(1.05)}
+.use-btn-done{background:#f0f0f0;color:#aaa;cursor:default}
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-btn{padding:8px 16px;border:2px solid #ede8ff;border-radius:50px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:var(--text2);cursor:pointer;background:white;transition:all .2s}
+.filter-btn.active{background:var(--purple);color:white;border-color:var(--purple)}
+.admin-lock{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:300px;gap:16px}
+.admin-lock-icon{font-size:64px;animation:bounce 2s ease-in-out infinite}
+.admin-section{background:white;border-radius:20px;padding:20px;box-shadow:var(--shadow-sm);margin-bottom:16px}
+.admin-section-title{font-size:16px;font-weight:900;color:var(--text);margin-bottom:14px}
+.admin-item{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #f5f0ff}
+.admin-item:last-child{border-bottom:none}
+.admin-item-icon{font-size:22px;width:36px;text-align:center}
+.admin-item-name{flex:1;font-size:14px;font-weight:700;color:var(--text)}
+.admin-item-reward{font-size:13px;font-weight:700;color:var(--yellow);white-space:nowrap}
+.btn-icon{width:34px;height:34px;border:none;border-radius:10px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;font-family:'Nunito',sans-serif}
+.btn-edit{background:var(--blue-light);color:var(--blue)}
+.btn-del{background:#fff0f0;color:var(--red)}
+.btn-edit:hover,.btn-del:hover{filter:brightness(0.9);transform:scale(1.05)}
+.input-sm{padding:10px 12px;border:2px solid #ede8ff;border-radius:var(--radius-sm);font-family:'Nunito',sans-serif;font-size:14px;color:var(--text);outline:none;width:100%}
+.input-sm:focus{border-color:var(--purple)}
+.form-group{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px}
+.form-label{font-size:12px;font-weight:700;color:var(--text2)}
+.gacha-prize-item{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid #f5f0ff}
+.gacha-prize-item:last-child{border-bottom:none}
+.prize-emoji{font-size:24px;width:36px;text-align:center}
+.prize-info{flex:1}
+.prize-info strong{font-size:14px;font-weight:800;color:var(--text);display:block}
+.prize-info span{font-size:12px;color:var(--text2);font-weight:600}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(100,80,140,0.4);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px}
+.modal{background:white;border-radius:24px;padding:28px;box-shadow:0 20px 60px rgba(150,100,200,0.25);width:100%;max-width:420px;animation:pop .3s ease}
+.modal-title{font-size:18px;font-weight:900;color:var(--text);margin-bottom:20px}
+.modal-actions{display:flex;gap:8px;margin-top:20px;justify-content:flex-end}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#4a3f5c;color:white;padding:12px 24px;border-radius:50px;font-size:14px;font-weight:700;z-index:200;animation:toastIn .3s ease;pointer-events:none;white-space:nowrap}
+@keyframes toastIn{0%{opacity:0;transform:translateX(-50%) translateY(20px)}100%{opacity:1;transform:translateX(-50%) translateY(0)}}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<script>
+const ADMIN_PASS='1234';
+const STICKERS=['⭐','🌟','✨','💫','🎀','🌈','🦋','🌸','🍭','🎊','🎁','🏆','👑','💎','🌺','🦄','🍦','🎠','🎪','🎨','🌙','☀️','🌻','🍓','🍰','🎶','🐬','🐱','🐻','🐼'];
+
+// ══════════════════════════════════════════════════════
+// 🔧 將下方網址換成你的 Apps Script 部署網址
+// ══════════════════════════════════════════════════════
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzMmb5GtJtqtv8QUsczZLTs6JNtfaxonUluXoRSAgkxV4YCGiRpEclxjdEDtuzCBGOoIw/exec';
+// ══════════════════════════════════════════════════════
+
+let _localCache = null;
+
+function getToday(){return new Date().toISOString().slice(0,10)}
+function getData(){return _localCache}
+
+// 儲存：寫本機快取 + Google Sheets
+async function saveData(d){
+  _localCache = d;
+  if(d.isGuest){localStorage.setItem('kidsHabitGuest',JSON.stringify(d));return;}
+  if(!GAS_URL||GAS_URL.startsWith('你的')){localStorage.setItem('kidsHabit2',JSON.stringify(d));return;}
+  try{
+    await fetch(GAS_URL,{
+      method:'POST',
+      body:JSON.stringify({nickname:d.nickname, payload:JSON.stringify(d)})
+    });
+  }catch(e){
+    console.warn('GAS 寫入失敗，改存 localStorage',e);
+    localStorage.setItem('kidsHabit2',JSON.stringify(d));
+  }
+}
+
+// 從 Google Sheets 讀取
+async function loadFromCloud(nickname){
+  if(!GAS_URL||GAS_URL.startsWith('你的')) return null;
+  try{
+    const res = await fetch(GAS_URL+'?nickname='+encodeURIComponent(nickname));
+    const data = await res.json();
+    if(data.ok) return JSON.parse(data.payload);
+  }catch(e){console.warn('GAS 讀取失敗',e);}
+  return null;
+}
+
+function defaultData(nickname,password=''){
+  return{nickname,password,isGuest:!password,stickers:0,stickerWall:[],
+    checkinLog:{},challengeLog:{},streakData:{},
+    gachaHistory:[],
+    dailyItems:[
+      {id:1,icon:'🌅',name:'早起床',reward:2},{id:2,icon:'🦷',name:'刷牙',reward:2},
+      {id:3,icon:'📚',name:'讀書30分鐘',reward:3},{id:4,icon:'🛏️',name:'整理床鋪',reward:2},{id:5,icon:'🥗',name:'吃蔬菜',reward:2},
+    ],
+    challengeItems:[
+      {id:1,icon:'🤸',name:'做10下伏地挺身',reward:5},{id:2,icon:'🎨',name:'畫一幅畫',reward:5},{id:3,icon:'🧩',name:'完成一個拼圖',reward:6},
+    ],
+    streakItems:[
+      {id:1,icon:'🌅',name:'早起床',targetDays:7,bonusReward:10},{id:2,icon:'📚',name:'讀書30分鐘',targetDays:14,bonusReward:20},
+    ],
+    gachaCost:10,
+    gachaPrizes:[
+      {id:1,icon:'🎊',name:'彩帶禮盒',rarity:'common',prob:40},{id:2,icon:'🎮',name:'遊戲時間',rarity:'rare',prob:25},
+      {id:3,icon:'🍦',name:'冰淇淋',rarity:'rare',prob:20},{id:4,icon:'🎪',name:'去遊樂場',rarity:'epic',prob:10},{id:5,icon:'👑',name:'國王特權',rarity:'legendary',prob:5},
+    ],
+    totalCheckinDays:0,completedChallenges:[],
+  }
+}
+
+let state={data:null,page:'daily',subPage:'challenges',adminUnlocked:false,showModal:null,lastResult:null,historyFilter:'all'};
+
+async function init(){
+  // 先嘗試讀訪客快取（以防斷網）
+  try{const g=localStorage.getItem('kidsHabitGuest');if(g){_localCache=JSON.parse(g)}}catch{}
+  try{const s=localStorage.getItem('kidsHabit2');if(s){_localCache=JSON.parse(s)}}catch{}
+  if(_localCache){state.data=_localCache;render();}else{renderLogin();}
+}
+function logout(){state.data=null;_localCache=null;state.adminUnlocked=false;state.page='daily';renderLogin()}
+
+function renderLogin(){
+  document.getElementById('app').innerHTML=`
+  <div class="login-screen">
+    <div class="login-mascot">🌈</div>
+    <h1 class="login-title">好習慣養成計畫 🌟</h1>
+    <p class="login-subtitle">每天一點點，越來越棒！</p>
+    <div class="login-card">
+      <div class="login-tabs">
+        <button class="login-tab active" id="tab-login" onclick="switchLoginTab('login')">登入</button>
+        <button class="login-tab" id="tab-register" onclick="switchLoginTab('register')">新用戶</button>
+      </div>
+      <div id="login-form">
+        <input class="input-field" id="l-nick" placeholder="🐰 輸入暱稱" type="text"/>
+        <input class="input-field" id="l-pass" placeholder="🔑 輸入密碼" type="password" style="margin-top:10px"/>
+        <div class="err-msg" id="l-err" style="display:none"></div>
+        <button class="btn btn-primary" style="margin-top:4px;width:100%" onclick="doLogin()">🚀 出發！</button>
+      </div>
+      <div id="register-form" style="display:none">
+        <input class="input-field" id="r-nick" placeholder="🐰 輸入暱稱" type="text"/>
+        <input class="input-field" id="r-pass" placeholder="🔑 設定密碼" type="password" style="margin-top:10px"/>
+        <input class="input-field" id="r-pass2" placeholder="🔑 確認密碼" type="password" style="margin-top:10px"/>
+        <div class="err-msg" id="r-err" style="display:none"></div>
+        <button class="btn btn-primary" style="margin-top:4px;width:100%" onclick="doRegister()">🎉 建立帳號</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;color:var(--text3);font-size:13px">
+        <div style="flex:1;height:1px;background:#f0eaff"></div>或<div style="flex:1;height:1px;background:#f0eaff"></div>
+      </div>
+      <button class="guest-btn" onclick="doGuest()">👀 訪客試用 (不儲存進度)</button>
+    </div>
+  </div>`
+}
+function switchLoginTab(t){
+  document.getElementById('tab-login').classList.toggle('active',t==='login');
+  document.getElementById('tab-register').classList.toggle('active',t==='register');
+  document.getElementById('login-form').style.display=t==='login'?'':'none';
+  document.getElementById('register-form').style.display=t==='register'?'':'none';
+}
+async function doLogin(){
+  const nick=document.getElementById('l-nick').value.trim();
+  const pass=document.getElementById('l-pass').value;
+  const err=document.getElementById('l-err');
+  if(!nick){err.textContent='請輸入暱稱！';err.style.display='block';return}
+  err.style.display='none';
+  // 顯示載入中
+  document.querySelector('#login-form .btn-primary').textContent='⏳ 登入中...';
+  // 先查 Firestore
+  let saved = await loadFromCloud(nick);
+  // fallback 到 localStorage
+  if(!saved){try{const ls=localStorage.getItem('kidsHabit2');if(ls){const d=JSON.parse(ls);if(d.nickname===nick)saved=d;}}catch{}}
+  if(saved){
+    if(saved.password&&saved.password!==pass){
+      err.textContent='密碼錯誤！';err.style.display='block';
+      document.querySelector('#login-form .btn-primary').textContent='🚀 出發！';return;
+    }
+    _localCache=saved;state.data=saved;
+  }else{
+    state.data=defaultData(nick,pass);_localCache=state.data;
+  }
+  await saveData(state.data);render();
+}
+async function doRegister(){
+  const nick=document.getElementById('r-nick').value.trim();
+  const pass=document.getElementById('r-pass').value;
+  const pass2=document.getElementById('r-pass2').value;
+  const err=document.getElementById('r-err');
+  err.style.display='none';
+  if(!nick){err.textContent='請輸入暱稱！';err.style.display='block';return}
+  if(!pass){err.textContent='請輸入密碼！';err.style.display='block';return}
+  if(pass!==pass2){err.textContent='兩次密碼不同！';err.style.display='block';return}
+  // 檢查雲端是否已有此暱稱
+  const existing = await loadFromCloud(nick);
+  if(existing){err.textContent='此暱稱已被使用！';err.style.display='block';return}
+  state.data=defaultData(nick,pass);_localCache=state.data;
+  await saveData(state.data);render();
+}
+function doGuest(){state.data=defaultData('小訪客','');state.data.isGuest=true;render()}
+
+function render(){
+  document.getElementById('app').innerHTML=`
+  ${renderHeader()}${renderNav()}
+  <div id="page-daily" class="page${state.page==='daily'?' active':''}"> ${renderDaily()} </div>
+  <div id="page-challenge" class="page${state.page==='challenge'?' active':''}"> ${renderChallenge()} </div>
+  <div id="page-gacha" class="page${state.page==='gacha'?' active':''}"> ${renderGacha()} </div>
+  <div id="page-admin" class="page${state.page==='admin'?' active':''}"> ${renderAdmin()} </div>
+  ${state.showModal?renderModal():''}`;
+}
+
+function renderHeader(){
+  const d=state.data;
+  return`<div class="app-header">
+    <div class="header-user">
+      <div class="avatar">${d.isGuest?'👀':'🦄'}</div>
+      <div><div class="header-name">${d.nickname}</div><div style="font-size:12px;font-weight:600;color:${d.isGuest?'var(--orange)':'var(--text2)'}">${d.isGuest?'訪客模式':'打卡冠軍！'}</div></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="sticker-count"><span style="font-size:20px">⭐</span><strong>${d.stickers}</strong><span style="font-size:13px;color:#8b6914;font-weight:700">貼紙</span></div>
+      <button class="btn btn-ghost btn-sm" onclick="logout()">登出</button>
+    </div>
+  </div>`
+}
+function renderNav(){
+  return`<div class="nav-tabs">${[{key:'daily',l:'📅 每日打卡'},{key:'challenge',l:'🏆 挑戰進步'},{key:'gacha',l:'🎰 扭蛋'},{key:'admin',l:'⚙️ 管理'}].map(t=>`
+    <button class="nav-tab${state.page===t.key?' active':''}" onclick="setPage('${t.key}')">${t.l}</button>`).join('')}</div>`
+}
+
+function renderDaily(){
+  const d=state.data,today=getToday(),log=d.checkinLog[today]||{};
+  const done=d.dailyItems.filter(i=>log[i.id]).length,total=d.dailyItems.length;
+  const pct=total>0?Math.round(done/total*100):0,allDone=done===total&&total>0;
+  return`
+  <div class="page-title">📅 今日打卡</div>
+  <div class="progress-container">
+    <div class="progress-label"><span>今日進度</span><strong>${done}/${total} 完成${allDone?' 🎉':''}</strong></div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="progress-bar-bg" style="flex:1"><div class="progress-bar-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:24px">${pct===100?'🏆':pct>=60?'🌟':pct>=30?'💪':'🌱'}</div>
+    </div>
+  </div>
+  <div class="checkin-list">
+    ${d.dailyItems.map(item=>{const isDone=!!log[item.id];return`
+    <div class="checkin-item${isDone?' done':''}">
+      <div class="checkin-item-icon" style="background:${isDone?'#e0f9ec':'#f5f0ff'}">${item.icon}</div>
+      <div class="checkin-item-info">
+        <div class="checkin-item-name" style="${isDone?'text-decoration:line-through;color:var(--text2)':''}">${item.name}</div>
+        <div class="checkin-item-reward"><span style="color:var(--yellow)">⭐</span>${item.reward} 貼紙${isDone?' ✅':''}</div>
+      </div>
+      <button class="check-btn ${isDone?'checked':'unchecked'}" onclick="toggleCheckin(${item.id})">${isDone?'✅':'○'}</button>
+    </div>`}).join('')}
+  </div>
+  ${allDone?`<div class="all-done-banner"><h3>🎊 太棒了！今天全部完成！</h3><p>獲得額外獎勵 ⭐5 貼紙！加油繼續！</p></div>`:''}`;
+}
+
+function renderChallenge(){
+  const subs=[{key:'challenges',l:'🎯 挑戰'},{key:'streak',l:'🔥 堅持力'},{key:'milestone',l:'🏅 里程碑'},{key:'wall',l:'🎀 貼紙牆'},{key:'history',l:'📜 扭蛋記錄'}];
+  return`<div class="page-title">🏆 挑戰與進步</div>
+  <div class="sub-tabs">${subs.map(s=>`<button class="sub-tab${state.subPage===s.key?' active':''}" onclick="setSubPage('${s.key}')">${s.l}</button>`).join('')}</div>
+  <div id="sub-content">${renderSubPage()}</div>`;
+}
+
+function renderSubPage(){
+  switch(state.subPage){
+    case'challenges':return renderChallenges();
+    case'streak':return renderStreak();
+    case'milestone':return renderMilestone();
+    case'wall':return renderStickerWall();
+    case'history':return renderGachaHistory();
+  }return'';
+}
+
+function renderChallenges(){
+  const d=state.data,today=getToday(),log=d.challengeLog[today]||{};
+  return`<div class="checkin-list">
+    ${d.challengeItems.map(item=>{const isDone=!!log[item.id];return`
+    <div class="checkin-item${isDone?' done':''}">
+      <div class="checkin-item-icon" style="background:${isDone?'#e0f9ec':'#fff5d6'}">${item.icon}</div>
+      <div class="checkin-item-info">
+        <div class="checkin-item-name" style="${isDone?'text-decoration:line-through;color:var(--text2)':''}">${item.name}</div>
+        <div class="checkin-item-reward"><span style="color:var(--yellow)">⭐</span>${item.reward} 貼紙${isDone?' ✅':''}</div>
+      </div>
+      <button class="check-btn ${isDone?'checked':'unchecked'}" onclick="toggleChallenge(${item.id})">${isDone?'✅':'○'}</button>
+    </div>`}).join('')}
+    ${d.challengeItems.length===0?`<div class="empty-state"><div class="es-icon">🎯</div><p>還沒有挑戰項目</p></div>`:''}
+  </div>`;
+}
+
+function renderStreak(){
+  const d=state.data;
+  return`<div class="streak-grid">
+    ${d.streakItems.map(item=>{
+      const days=d.streakData[item.id]||0,pct=Math.min(100,Math.round(days/item.targetDays*100));
+      return`<div class="streak-card">
+        <div class="streak-icon">${item.icon}</div>
+        <div class="streak-name">${item.name}</div>
+        <div class="streak-days">${days}</div>
+        <div class="streak-label">天 / ${item.targetDays} 天目標</div>
+        <div class="streak-bar-bg"><div class="streak-bar-fill" style="width:${pct}%"></div></div>
+        ${days>=item.targetDays?`<div style="margin-top:8px;font-size:12px;font-weight:700;color:var(--green)">🎉 +⭐${item.bonusReward}</div>`:''}
+      </div>`}).join('')}
+    ${d.streakItems.length===0?`<div class="empty-state" style="grid-column:1/-1"><div class="es-icon">🔥</div><p>還沒有堅持項目</p></div>`:''}
+  </div>`;
+}
+
+function renderMilestone(){
+  const d=state.data;
+  return`<div class="milestone-stats">
+    <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num">${d.totalCheckinDays}</div><div class="stat-label">累積打卡天數</div></div>
+    <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-num">${d.stickerWall.length}</div><div class="stat-label">蒐集貼紙數</div></div>
+  </div>
+  <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:12px">✅ 完成的挑戰</div>
+  <div class="milestone-list">
+    ${d.completedChallenges.slice().reverse().map(c=>`
+    <div class="milestone-item">
+      <div class="milestone-icon">${c.icon}</div>
+      <div class="milestone-info"><strong>${c.name}</strong><span>📅 ${c.date}</span></div>
+      <div style="font-size:13px;font-weight:700;color:var(--yellow)">+${c.reward}⭐</div>
+    </div>`).join('')}
+    ${d.completedChallenges.length===0?`<div class="empty-state"><div class="es-icon">🏅</div><p>還沒有完成的挑戰<br>加油！</p></div>`:''}
+  </div>`;
+}
+
+function renderStickerWall(){
+  const d=state.data;
+  return`<div class="sticker-wall">
+    <div style="font-size:15px;font-weight:800;color:var(--text);margin-bottom:16px">🎀 我的貼紙牆 (${d.stickerWall.length} 個)</div>
+    ${d.stickerWall.length>0?`<div class="sticker-grid">${d.stickerWall.map(s=>`<div class="sticker-item">${s}</div>`).join('')}</div>`
+    :`<div class="empty-state"><div class="es-icon">🎀</div><p>完成任務就能獲得貼紙！</p></div>`}
+  </div>`;
+}
+
+// ======= GACHA HISTORY with USE button =======
+function renderGachaHistory(){
+  const d=state.data;
+  const f=state.historyFilter;
+  const list=f==='all'?d.gachaHistory:f==='unused'?d.gachaHistory.filter(h=>!h.used):d.gachaHistory.filter(h=>h.used);
+  const unused=d.gachaHistory.filter(h=>!h.used).length;
+  const used=d.gachaHistory.filter(h=>h.used).length;
+  return`
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+    <div style="font-size:15px;font-weight:800;color:var(--text)">📜 扭蛋兌換記錄</div>
+    <div style="display:flex;gap:8px;font-size:13px;font-weight:700">
+      <span style="color:var(--green)">✅ 已使用 ${used}</span>
+      <span style="color:var(--orange)">🎁 未使用 ${unused}</span>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <button class="filter-btn${f==='all'?' active':''}" onclick="setHistoryFilter('all')">全部 (${d.gachaHistory.length})</button>
+    <button class="filter-btn${f==='unused'?' active':''}" onclick="setHistoryFilter('unused')">🎁 未使用 (${unused})</button>
+    <button class="filter-btn${f==='used'?' active':''}" onclick="setHistoryFilter('used')">✅ 已使用 (${used})</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:10px">
+    ${list.length>0?list.slice().reverse().map((h,ri)=>{
+      const realIdx=d.gachaHistory.length-1-ri;
+      return`
+    <div class="gh-card${h.used?' used':''}">
+      <div class="gh-icon">${h.icon}</div>
+      <div class="gh-info">
+        <div class="gh-name">${h.name}</div>
+        <div class="gh-meta">
+          <span class="badge" style="background:${rarityBg(h.rarity)};color:${rarityColor(h.rarity)}">${rarityName(h.rarity)}</span>
+          <span class="gh-date">🗓 ${h.date}</span>
+          <span class="gh-cost">-${h.cost}⭐</span>
+          ${h.used?`<span class="gh-used-date">✅ ${h.usedDate} 使用</span>`:''}
+        </div>
+      </div>
+      ${h.used
+        ?`<button class="use-btn use-btn-done" disabled>已使用</button>`
+        :`<button class="use-btn use-btn-active" onclick="useGachaPrize(${realIdx})">🎁 使用</button>`
+      }
+    </div>`}).join('')
+    :`<div class="empty-state"><div class="es-icon">🎰</div><p>還沒有扭蛋記錄</p></div>`}
+  </div>`;
+}
+
+function setHistoryFilter(f){state.historyFilter=f;setSubPage('history')}
+
+async function useGachaPrize(idx){
+  const d=state.data;
+  if(d.gachaHistory[idx]&&!d.gachaHistory[idx].used){
+    d.gachaHistory[idx].used=true;
+    d.gachaHistory[idx].usedDate=getToday();
+    saveData(d);
+    showToast(`🎉 ${d.gachaHistory[idx].icon} ${d.gachaHistory[idx].name} 已使用！`);
+    setSubPage('history');
+  }
+}
+
+// ======= GACHA PAGE =======
+function renderGacha(){
+  const d=state.data,canAfford=d.stickers>=d.gachaCost;
+  return`<div class="page-title">🎰 扭蛋機</div>
+  <div class="gacha-container">
+    <div class="gacha-cost">需要 <span style="font-size:20px">⭐</span> ${d.gachaCost} 貼紙</div>
+    <div class="gacha-machine" onclick="doGacha()">
+      <svg viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="40" width="160" height="180" rx="20" fill="#a78bfa"/>
+        <rect x="30" y="50" width="140" height="120" rx="14" fill="#c4b5fd"/>
+        <circle cx="100" cy="110" r="50" fill="#ede9fe" stroke="#7c3aed" stroke-width="3"/>
+        <circle cx="100" cy="110" r="44" fill="#f5f3ff"/>
+        <text x="100" y="120" text-anchor="middle" font-size="42">🎊</text>
+        <rect x="80" y="185" width="40" height="16" rx="8" fill="#7c3aed"/>
+        <rect x="85" y="170" width="30" height="20" rx="6" fill="#6d28d9"/>
+        <text x="100" y="230" text-anchor="middle" font-size="12" fill="#7c3aed" font-weight="bold">點擊扭蛋！</text>
+      </svg>
+    </div>
+    ${state.lastResult?`
+    <div class="gacha-result">
+      <div class="gacha-result-icon">${state.lastResult.icon}</div>
+      <div class="gacha-result-name">${state.lastResult.name}</div>
+      <span class="badge" style="background:${rarityBg(state.lastResult.rarity)};color:${rarityColor(state.lastResult.rarity)}">${rarityName(state.lastResult.rarity)}</span>
+      <p style="margin-top:8px;font-size:13px;color:var(--text2);font-weight:600">去「挑戰進步 → 扭蛋記錄」使用獎品！</p>
+    </div>`:''}
+    <button class="gacha-btn-main" onclick="doGacha()" ${canAfford?'':'disabled'}>${canAfford?'🎰 抽一次！':'⭐ 貼紙不足'}</button>
+    <div style="font-size:13px;color:var(--text2);font-weight:600">目前有 <strong style="color:var(--purple)">${d.stickers}</strong> 張貼紙</div>
+  </div>`;
+}
+
+// ======= ADMIN =======
+function renderAdmin(){
+  if(!state.adminUnlocked)return`<div class="admin-lock">
+    <div class="admin-lock-icon">🔒</div>
+    <div style="font-size:20px;font-weight:900;color:var(--text)">管理模式</div>
+    <p style="font-size:14px;color:var(--text2);font-weight:600">請輸入管理密碼</p>
+    <input class="input-field" id="admin-pass" type="password" placeholder="🔑 輸入密碼" style="max-width:280px"/>
+    <div class="err-msg" id="admin-err" style="display:none">密碼錯誤！</div>
+    <button class="btn btn-primary" onclick="unlockAdmin()">解鎖管理</button>
+  </div>`;
+  const d=state.data;
+  return`<div class="page-title">⚙️ 管理模式</div>
+  <div class="admin-section">
+    <div class="admin-section-title">📅 每日打卡項目</div>
+    ${d.dailyItems.map(item=>`
+    <div class="admin-item">
+      <div class="admin-item-icon">${item.icon}</div>
+      <div class="admin-item-name">${item.name}</div>
+      <div class="admin-item-reward">⭐${item.reward}</div>
+      <button class="btn-icon btn-edit" onclick="openEdit('daily',${item.id})">✏️</button>
+      <button class="btn-icon btn-del" onclick="deleteItem('daily',${item.id})">🗑️</button>
+    </div>`).join('')}
+    <button class="btn btn-green btn-sm" style="margin-top:10px;width:100%" onclick="openAdd('daily')">➕ 新增項目</button>
+  </div>
+  <div class="admin-section">
+    <div class="admin-section-title">🎯 挑戰與進步項目</div>
+    ${d.challengeItems.map(item=>`
+    <div class="admin-item">
+      <div class="admin-item-icon">${item.icon}</div>
+      <div class="admin-item-name">${item.name}</div>
+      <div class="admin-item-reward">⭐${item.reward}</div>
+      <button class="btn-icon btn-edit" onclick="openEdit('challenge',${item.id})">✏️</button>
+      <button class="btn-icon btn-del" onclick="deleteItem('challenge',${item.id})">🗑️</button>
+    </div>`).join('')}
+    <button class="btn btn-green btn-sm" style="margin-top:10px;width:100%" onclick="openAdd('challenge')">➕ 新增項目</button>
+  </div>
+  <div class="admin-section">
+    <div class="admin-section-title">🔥 堅持與毅力項目</div>
+    ${d.streakItems.map(item=>`
+    <div class="admin-item">
+      <div class="admin-item-icon">${item.icon}</div>
+      <div class="admin-item-name">${item.name}</div>
+      <div class="admin-item-reward">🎯${item.targetDays}天 ⭐${item.bonusReward}</div>
+      <button class="btn-icon btn-edit" onclick="openEdit('streak',${item.id})">✏️</button>
+      <button class="btn-icon btn-del" onclick="deleteItem('streak',${item.id})">🗑️</button>
+    </div>`).join('')}
+    <button class="btn btn-green btn-sm" style="margin-top:10px;width:100%" onclick="openAdd('streak')">➕ 新增項目</button>
+  </div>
+  <div class="admin-section">
+    <div class="admin-section-title">🎰 扭蛋設定</div>
+    <div class="admin-item">
+      <span style="font-size:14px;font-weight:700;color:var(--text);flex:1">每次抽獎費用</span>
+      <input class="input-sm" id="gacha-cost-input" type="number" value="${d.gachaCost}" min="1" style="width:80px;text-align:center"/>
+      <button class="btn btn-primary btn-sm" onclick="saveGachaCost()">儲存</button>
+    </div>
+    <div style="margin-top:14px;font-size:14px;font-weight:800;color:var(--text);margin-bottom:10px">獎項設定</div>
+    ${d.gachaPrizes.map(p=>`
+    <div class="gacha-prize-item">
+      <div class="prize-emoji">${p.icon}</div>
+      <div class="prize-info">
+        <strong>${p.name}</strong>
+        <span><span class="badge" style="background:${rarityBg(p.rarity)};color:${rarityColor(p.rarity)}">${rarityName(p.rarity)}</span> 機率 ${p.prob}%</span>
+      </div>
+      <button class="btn-icon btn-edit" onclick="openEdit('prize',${p.id})">✏️</button>
+      <button class="btn-icon btn-del" onclick="deleteItem('prize',${p.id})">🗑️</button>
+    </div>`).join('')}
+    <button class="btn btn-green btn-sm" style="margin-top:10px;width:100%" onclick="openAdd('prize')">➕ 新增獎項</button>
+  </div>
+  <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="state.adminUnlocked=false;render()">🔒 關閉管理模式</button>`;
+}
+
+function renderModal(){
+  const m=state.showModal;
+  const typeMap={
+    'edit-daily':'daily','add-daily':'daily',
+    'edit-challenge':'challenge','add-challenge':'challenge',
+    'edit-streak':'streak','add-streak':'streak',
+    'edit-prize':'prize','add-prize':'prize',
+  };
+  const t=typeMap[m.type];
+  const isEdit=m.type.startsWith('edit');
+  const titles={daily:['✏️ 修改打卡項目','➕ 新增打卡項目'],challenge:['✏️ 修改挑戰','➕ 新增挑戰'],streak:['✏️ 修改堅持項目','➕ 新增堅持項目'],prize:['✏️ 修改獎項','➕ 新增獎項']};
+  const title=titles[t][isEdit?0:1];
+  let fields='';
+  if(t==='daily'||t==='challenge'){
+    const def=m.item||{icon:t==='daily'?'🌟':'🎯',name:'',reward:t==='daily'?2:5};
+    fields=`
+    <div class="form-group"><div class="form-label">表情符號（直接貼入即可）</div><input class="input-sm" id="m-icon" value="${def.icon}" placeholder="🌟"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">項目名稱</div><input class="input-sm" id="m-name" value="${def.name}"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">獲得貼紙數</div><input class="input-sm" id="m-reward" type="number" value="${def.reward}" min="1"/></div>`;
+  }else if(t==='streak'){
+    const def=m.item||{icon:'🔥',name:'',targetDays:7,bonusReward:10};
+    fields=`
+    <div class="form-group"><div class="form-label">表情符號</div><input class="input-sm" id="m-icon" value="${def.icon}"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">項目名稱</div><input class="input-sm" id="m-name" value="${def.name}"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">目標天數</div><input class="input-sm" id="m-target" type="number" value="${def.targetDays}" min="1"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">達標獎勵貼紙</div><input class="input-sm" id="m-bonus" type="number" value="${def.bonusReward}" min="1"/></div>`;
+  }else if(t==='prize'){
+    const def=m.item||{icon:'🎁',name:'',rarity:'common',prob:10};
+    fields=`
+    <div class="form-group"><div class="form-label">表情符號</div><input class="input-sm" id="m-icon" value="${def.icon}"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">獎項名稱</div><input class="input-sm" id="m-name" value="${def.name}"/></div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">稀有度</div>
+      <select class="input-sm" id="m-rarity">
+        <option value="common" ${def.rarity==='common'?'selected':''}>普通</option>
+        <option value="rare" ${def.rarity==='rare'?'selected':''}>稀有</option>
+        <option value="epic" ${def.rarity==='epic'?'selected':''}>史詩</option>
+        <option value="legendary" ${def.rarity==='legendary'?'selected':''}>傳說</option>
+      </select>
+    </div>
+    <div class="form-group" style="margin-top:10px"><div class="form-label">出現機率 (%)</div><input class="input-sm" id="m-prob" type="number" value="${def.prob}" min="1" max="100"/></div>`;
+  }
+  return`<div class="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal-title">${title}</div>
+    ${fields}
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>
+      <button class="btn btn-primary btn-sm" onclick="saveItem('${t}')">儲存</button>
+    </div>
+  </div></div>`;
+}
+
+// ACTIONS
+function setPage(p){state.page=p;render()}
+function setSubPage(p){state.subPage=p;render()}
+function closeModal(e){if(!e||e.target===e.currentTarget){state.showModal=null;render()}}
+function openAdd(type){state.showModal={type:'add-'+type,item:null};render()}
+function openEdit(type,id){
+  const d=state.data;
+  const maps={daily:d.dailyItems,challenge:d.challengeItems,streak:d.streakItems,prize:d.gachaPrizes};
+  const item=maps[type].find(i=>i.id===id);
+  state.showModal={type:'edit-'+type,item:{...item}};render();
+}
+async function deleteItem(type,id){
+  const d=state.data;
+  const maps={daily:'dailyItems',challenge:'challengeItems',streak:'streakItems',prize:'gachaPrizes'};
+  d[maps[type]]=d[maps[type]].filter(i=>i.id!==id);
+  await saveData(d);render();showToast('🗑️ 已刪除！');
+}
+async function saveItem(type){
+  const d=state.data,m=state.showModal,isEdit=m.type.startsWith('edit');
+  const icon=document.getElementById('m-icon').value.trim()||'🌟';
+  const name=document.getElementById('m-name').value.trim();
+  if(!name){showToast('請輸入名稱！');return}
+  if(type==='daily'||type==='challenge'){
+    const reward=parseInt(document.getElementById('m-reward').value)||2;
+    const arr=type==='daily'?d.dailyItems:d.challengeItems;
+    if(isEdit){const i=arr.findIndex(x=>x.id===m.item.id);arr[i]={...arr[i],icon,name,reward}}
+    else arr.push({id:Date.now(),icon,name,reward});
+  }else if(type==='streak'){
+    const targetDays=parseInt(document.getElementById('m-target').value)||7;
+    const bonusReward=parseInt(document.getElementById('m-bonus').value)||10;
+    if(isEdit){const i=d.streakItems.findIndex(x=>x.id===m.item.id);d.streakItems[i]={...d.streakItems[i],icon,name,targetDays,bonusReward}}
+    else d.streakItems.push({id:Date.now(),icon,name,targetDays,bonusReward});
+  }else if(type==='prize'){
+    const rarity=document.getElementById('m-rarity').value;
+    const prob=parseInt(document.getElementById('m-prob').value)||10;
+    if(isEdit){const i=d.gachaPrizes.findIndex(x=>x.id===m.item.id);d.gachaPrizes[i]={...d.gachaPrizes[i],icon,name,rarity,prob}}
+    else d.gachaPrizes.push({id:Date.now(),icon,name,rarity,prob});
+  }
+  await saveData(d);state.showModal=null;render();showToast('✅ 儲存成功！');
+}
+async function saveGachaCost(){
+  const v=parseInt(document.getElementById('gacha-cost-input').value)||10;
+  state.data.gachaCost=v;await saveData(state.data);render();showToast('✅ 費用已更新！');
+}
+function unlockAdmin(){
+  const p=document.getElementById('admin-pass').value;
+  if(p===ADMIN_PASS){state.adminUnlocked=true;render()}
+  else document.getElementById('admin-err').style.display='block';
+}
+async function toggleCheckin(id){
+  const d=state.data,today=getToday();
+  if(!d.checkinLog[today])d.checkinLog[today]={};
+  const wasAllDone=d.dailyItems.every(i=>d.checkinLog[today][i.id]);
+  const wasDone=d.checkinLog[today][id];
+  const item=d.dailyItems.find(i=>i.id===id);
+  if(wasDone){
+    delete d.checkinLog[today][id];
+    d.stickers=Math.max(0,d.stickers-item.reward);
+  }else{
+    d.checkinLog[today][id]=true;
+    d.stickers+=item.reward;
+    addStickers(item.reward);
+    showToast(`${item.icon} +${item.reward}⭐ 打卡成功！`);
+    const si=d.streakItems.find(s=>s.name===item.name);
+    if(si){d.streakData[si.id]=(d.streakData[si.id]||0)+1;if(d.streakData[si.id]===si.targetDays){d.stickers+=si.bonusReward;showToast(`🔥 堅持${si.targetDays}天！+${si.bonusReward}⭐`)}}
+    const nowAllDone=d.dailyItems.every(i=>d.checkinLog[today][i.id]);
+    if(!wasAllDone&&nowAllDone){d.stickers+=5;addStickers(5);d.totalCheckinDays++;showToast('🎉 今天全部完成！+5⭐ 額外獎勵！')}
+  }
+  await saveData(d);render();
+}
+async function toggleChallenge(id){
+  const d=state.data,today=getToday();
+  if(!d.challengeLog[today])d.challengeLog[today]={};
+  const wasDone=d.challengeLog[today][id];
+  const item=d.challengeItems.find(i=>i.id===id);
+  if(wasDone){delete d.challengeLog[today][id];d.stickers=Math.max(0,d.stickers-item.reward)}
+  else{
+    d.challengeLog[today][id]=true;d.stickers+=item.reward;addStickers(item.reward);
+    d.completedChallenges.push({...item,date:today});
+    showToast(`${item.icon} 挑戰成功！+${item.reward}⭐`);
+  }
+  await saveData(d);setSubPage('challenges');
+}
+function addStickers(count){
+  const d=state.data;
+  for(let i=0;i<count;i++)d.stickerWall.push(STICKERS[Math.floor(Math.random()*STICKERS.length)]);
+}
+async function doGacha(){
+  const d=state.data;
+  if(d.stickers<d.gachaCost)return;
+  const prizes=d.gachaPrizes;
+  if(!prizes.length){showToast('還沒有設定獎項！');return}
+  d.stickers-=d.gachaCost;
+  const total=prizes.reduce((a,b)=>a+b.prob,0);
+  let rand=Math.random()*total,result=prizes[prizes.length-1];
+  for(const p of prizes){rand-=p.prob;if(rand<=0){result=p;break}}
+  const entry={...result,date:getToday(),cost:d.gachaCost,used:false,usedDate:null};
+  d.gachaHistory.push(entry);
+  state.lastResult=result;
+  await saveData(d);render();
+  showToast(`🎊 獲得：${result.icon} ${result.name}！`);
+}
+
+// helpers
+function rarityBg(r){return{common:'#f0f0f0',rare:'#e0f0ff',epic:'#ede9fe',legendary:'#fff5d6'}[r]||'#f0f0f0'}
+function rarityColor(r){return{common:'#666',rare:'#1a5fa8',epic:'#5b21b6',legendary:'#8b6914'}[r]||'#666'}
+function rarityName(r){return{common:'普通',rare:'稀有',epic:'史詩',legendary:'傳說'}[r]||'普通'}
+
+let toastTimeout;
+function showToast(msg){
+  const old=document.querySelector('.toast');if(old)old.remove();
+  const t=document.createElement('div');t.className='toast';t.textContent=msg;
+  document.body.appendChild(t);clearTimeout(toastTimeout);
+  toastTimeout=setTimeout(()=>t.remove(),2500);
+}
+
+init();
+</script>
+</body>
+</html>
