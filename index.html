@@ -175,7 +175,6 @@ body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#ffeef8 0
 <body>
 <div class="app" id="app"></div>
 <script>
-const ADMIN_PASS='1234';
 const STICKERS=['⭐','🌟','✨','💫','🎀','🌈','🦋','🌸','🍭','🎊','🎁','🏆','👑','💎','🌺','🦄','🍦','🎠','🎪','🎨','🌙','☀️','🌻','🍓','🍰','🎶','🐬','🐱','🐻','🐼'];
 
 // ══════════════════════════════════════════════════════
@@ -714,7 +713,11 @@ async function saveGachaCost(){
 }
 function unlockAdmin(){
   const p=document.getElementById('admin-pass').value;
-  if(p===ADMIN_PASS){state.adminUnlocked=true;render()}
+  const correct=state.data.password;
+  if(!correct){// 訪客模式沒有密碼，任意輸入都可進入
+    state.adminUnlocked=true;render();return;
+  }
+  if(p===correct){state.adminUnlocked=true;render()}
   else document.getElementById('admin-err').style.display='block';
 }
 async function toggleCheckin(id){
